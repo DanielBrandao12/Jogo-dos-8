@@ -1,13 +1,21 @@
 let cont = 0
-const board = document.querySelectorAll('.board .box').forEach( i=>{
-  const positions = [1,2,3,4,5,6,7,8,""]
+
+
+const board = document.querySelectorAll('.box')
+
+const positions = [1,2,3,4,5,6,7,8,""]
  
-  i.innerText=positions[cont]
-  cont++
-  console.log(i.innerHTML.valueOf())
-  i.addEventListener('click', event=>{
+
+
+board.forEach( buttons=>{
+
+  const positions = [1,2,3,4,5,6,7,8,""]
+
+  board[buttons.id-1].innerText = positions[buttons.id-1]
+
+  buttons.addEventListener('click', event=>{
    
-    console.log('oi')
+  
   })
 })
 
