@@ -1,41 +1,83 @@
-let cont = 0
-
 const board = document.querySelector('.board')
+const btnEmbaralhar = document.querySelector('.embaralhar')
 
-
-let positions = [1,2,3,4,5,6,7,8,""]
-
+let positions = [1, 2, 3, 4, 5, 6, 7, 8, ""]
 let arr = []
+let ganha = ['1', '2', '3', '4', '5', '6', '7', '8', '']
 
 
 
+function shuffleArray(positions) {
 
+  for (let i = positions.length - 1; i > 0; i--) {
 
-for(let i =0; i<positions.length;i++){
+    const j = Math.floor(Math.random() * (i + 1));
+    [positions[i], positions[j]] = [positions[j], positions[i]];
 
-  board.innerHTML += `<div class="box" id="${i+1}">${positions[i]}</div>`
-  arr.push(board.innerHTML)
-  
-  
+  }
+
+  return positions;
+
 }
-console.log(arr)
 
-const box = document.querySelectorAll('.box')
-box.forEach( buttons=>{
+function criarTabuleiro() {
+  for (let i = 0; i < positions.length; i++) {
+
+    board.innerHTML += `<button class="box" id="${i + 1}">${positions[i]}</button>`
+
+  }
+  const box = document.querySelectorAll('.box')
+
+  for (let i = 0; i < box.length; i++) {
+    arr.push(box[i].innerText)
+  }
+
+ 
+  box.forEach(buttons => {
+    buttons.addEventListener('click', event => {
+
+      for (let i = 0; i < box.length; i++) {
+
+        if (box[i].innerText == '') {
+
+          box[i].innerText = buttons.innerText
+          arr[arr.indexOf(buttons.innerText)] = ""
+          arr[i] = buttons.innerText
+
+        }
+      }
+      buttons.innerText = ""
+
+     
+
+      console.log(arr)
+
+      console.log(ganha)
+       if (arr == ganha) {
+    console.log("voce ganhou")
+  }
+    })
+  })
+}
 
 
-  box[buttons.id-1].innerText = positions[buttons.id-1]
 
-  buttons.addEventListener('click', event=>{
-      console.log(buttons)
-    if(buttons.innerText == '6'){
-        arr[5] =''
-        arr[9] ='6'
-       box[buttons.id-1].innerText =""
-      box[8].innerText='6'
-    }
-    console.log(arr)
+
+
+btnEmbaralhar.addEventListener('click', () => {
+
+  board.innerHTML = ''
+  arr = []
+  shuffleArray(positions)
+  criarTabuleiro()
+
+  positions.forEach(position => {
+
+    arr[arr.indexOf(position)] = position.toString()
+
   })
 })
 
-//console.log(box.innerHTML.valueOf())
+criarTabuleiro()
+
+
